@@ -1,33 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import Card from './components/card'
+import Pagination from './components/pagination'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+
+export const App = () => {
+  let [fetchedData, setFetchedData] = useState([]);
+  let { info, results } = fetchedData;
+  let [numPage, setNumPage] = useState(1);
+  let api = `https://rickandmortyapi.com/api/character/?page=${numPage}`
+
+  useEffect(() => {
+    fetch(api) 
+      .then(response => response.json())
+      .then(setFetchedData)
+  }, [api]);
+
+  console.log(info)
+
+  if (!results) {
+    return "Loading...";
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container-fluid p-5 bg-primary text-white text-center">
+        <h1 className="roboto">Info Rick & Morty</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+      <div className="container text-center">
+        <div className="row row-cols-4 row-gap-3">
+          {results.map((character) => {
+            return <Card key={character.id} name={character.name} image={character.image} gender={character.gender} status={character.status} />
+          }
+          )}
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <Pagination
+        info={info}
+        numPage={numPage}
+        setNumPage={setNumPage}
+      />
     </>
   )
 }
