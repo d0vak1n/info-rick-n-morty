@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import Card from './components/card'
 import Pagination from './components/pagination'
@@ -5,18 +6,17 @@ import './App.css'
 
 
 export const App = () => {
-  let [fetchedData, setFetchedData] = useState([]);
-  let { info, results } = fetchedData;
-  let [numPage, setNumPage] = useState(1);
-  let api = `https://rickandmortyapi.com/api/character/?page=${numPage}`
+  const [fetchedData, setFetchedData] = useState([]);
+  const [numPage, setNumPage] = useState(1);
+
+  const { info, results } = fetchedData;
+  const api = `https://rickandmortyapi.com/api/character/?page=${numPage}`
 
   useEffect(() => {
-    fetch(api) 
+    fetch(api)
       .then(response => response.json())
       .then(setFetchedData)
   }, [api]);
-
-  console.log(info)
 
   if (!results) {
     return "Loading...";
@@ -29,7 +29,7 @@ export const App = () => {
       </div>
 
       <div className="container text-center">
-        <div className="row row-cols-4 row-gap-3">
+        <div className="row row-cols-lg-4 row-cols-md-2 col-12 row-gap-3">
           {results.map((character) => {
             return <Card key={character.id} name={character.name} image={character.image} gender={character.gender} status={character.status} />
           }
@@ -38,7 +38,6 @@ export const App = () => {
       </div>
 
       <Pagination
-        info={info}
         numPage={numPage}
         setNumPage={setNumPage}
       />
