@@ -2,8 +2,6 @@
 
 ```
 bootstrap & sass
-
-npm run dev
 ```
 
 ### Packages installation for local execution
