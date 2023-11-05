@@ -29,7 +29,7 @@ export const App = () => {
       </div>
 
       <div className="container text-center">
-        <div className="row row-cols-lg-4 row-cols-md-2 col-12 row-gap-3">
+        <div className="row row-cols-lg-4 row-cols-md-2 row-gap-3">
           {results.map((character) => {
             return <Card key={character.id} name={character.name} image={character.image} gender={character.gender} status={character.status} />
           }
